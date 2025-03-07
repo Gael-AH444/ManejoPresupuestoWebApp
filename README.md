@@ -17,5 +17,6 @@ Manejo de presupuesto es una aplicacion web para administrar y gestionar los dif
 ## Tech Stack
 
 **Frontend:** Bootstrap, HTML, JS y CSS
+
 **Backend:** C#, SQL Server y Dapper
 
