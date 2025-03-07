@@ -6,11 +6,11 @@ Manejo de presupuesto es una aplicacion web para administrar y gestionar los dif
 ## Screenshots
 
 
-![App Screenshot](ManejoPresupueso/img/login.PNG)
-![App Screenshot](ManejoPresupueso/img/transacciones.PNG)
-![App Screenshot](ManejoPresupueso/img/calendario.PNG)
-![App Screenshot](ManejoPresupueso/img/categorias.PNG)
-![App Screenshot](ManejoPresupueso/img/tiposcuentas.PNG)
+![App Screenshot](ManejoPresupuesto/img/login.PNG)
+![App Screenshot](ManejoPresupuesto/img/transacciones.PNG)
+![App Screenshot](ManejoPresupuesto/img/calendario.PNG)
+![App Screenshot](ManejoPresupuesto/img/categorias.PNG)
+![App Screenshot](ManejoPresupuesto/img/tiposcuentas.PNG)
 
 
 
