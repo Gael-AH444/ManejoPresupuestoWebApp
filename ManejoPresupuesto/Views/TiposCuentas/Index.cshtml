@@ -1,0 +1,82 @@
+﻿@model IEnumerable<TipoCuentaModel>
+@{
+	ViewData["Title"] = "Tipos Cuentas";
+}
+
+<h1>Tipos de cuentas</h1>
+<h5>
+	El tipo de cuenta se refiere a cómo podemos guardar cuentas.
+	Ejemplos: Préstamos, tarjetas de crédito, etc.
+</h5>
+
+<a asp-action="Crear" class="btn btn-primary mb-3">Crear nuevo</a>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Acciones</th>
+			<th>Nombre</th>
+		</tr>
+	</thead>
+	<tbody id="reordenable"> @* id 'reordenable' *@
+		@foreach (var tipoCuenta in Model)
+		{
+			<tr>
+				<td>
+					<input type="hidden" value="@tipoCuenta.id" class="ids" /> @* Obtiene los ids de los tipos cuentas y los muestra de manera oculta *@
+					<a class="btn btn-primary" asp-action="Editar" asp-route-id="@tipoCuenta.id">Editar</a>
+					<a class="btn btn-danger" asp-action="Borrar" asp-route-id="@tipoCuenta.id">Borrar</a>
+				</td>
+				<td>
+					@tipoCuenta.Nombre
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+
+@* Script para poder ordenar las filas de la tabla, y mandar los ids con el nuevo orden al backend *@
+@section Scripts {
+	<script>
+
+		//Crea la ruta del controlador (Metodo 'Ordenar') a la que se enviar la informacion de los IDs
+		const urlOrdenar = '@Url.Action("Ordenar")'
+
+		$(function () { /* El signo '$' Hace uso de la libreria JQuery */
+			$("#reordenable").sortable({ /* sortable = reorganizable */
+				stop: async function (e, ui) { /* Cuando el usuario termina de mover un elemento, se llama a la función actualizarOrdenes() para enviar el nuevo orden al servidor.*/
+					await actualizarOrdenes();
+				}
+			});
+
+			// Funcion para obtener el arreglo de IDs y mandarlos al Backend
+			async function actualizarOrdenes() {
+				const ids = obtenerIdsDeElementos();
+				await enviarIdsAlBackend(ids);
+			}
+
+			// Funcion para obtener IDs en forma de arreglos
+			function obtenerIdsDeElementos() {
+				const ids = $(".ids").map(function () {
+					return $(this).val();
+				}).get();
+
+				return ids; /* Retorna un arreglo de ID's */
+			}
+
+			//Funcion para enviar el arreglo de IDs al Backend
+			async function enviarIdsAlBackend(ids) {
+				var data = JSON.stringify(ids); //Convertir en formato JSON el arreglo de IDs
+
+				await fetch(urlOrdenar, {
+					method: 'POST',
+					body: data,
+					headers: { /*El headers especifica que el contenido es JSON.*/
+						'Content-Type': 'application/json'
+					}
+				});
+			}
+		})
+	</script>
+}

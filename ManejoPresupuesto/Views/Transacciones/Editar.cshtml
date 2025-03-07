@@ -1,0 +1,75 @@
+﻿@model TransaccionActualizacionVM
+@{
+	ViewData["Title"] = "Editar transacción";
+
+	//Si la url no es vacia se tomara el valor del modelo, de lo contrario redirigira hacia el INDEX
+	var linkCancelar = Model.UrlRetorno ?? Url.Action("Index");
+}
+
+<h1>Editar transacción</h1>
+<h5>Una transacción te permite indicar tus ingresos y gastos</h5>
+
+<form asp-action="Editar">
+	<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+	<input type="hidden" asp-for="id" />
+	<input type="hidden" asp-for="UrlRetorno" />
+	<input type="hidden" asp-for="MontoAnterior" />
+	<input type="hidden" asp-for="CuentaAnteriorID" />
+
+	<div class="mb-3">
+		<label asp-for="FechaTransaccion" class="form-label"></label>
+		<input asp-for="FechaTransaccion" class="form-control" />
+		<span asp-validation-for="FechaTransaccion" class="text-danger"></span>
+	</div>
+
+	<div class="mb-3">
+		<label asp-for="CuentaID" class="form-label"></label>
+		<select asp-for="CuentaID" asp-items="Model.Cuentas" class="form-select"></select>
+		<span asp-validation-for="CuentaID" class="text-danger"></span>
+	</div>
+
+	<div class="mb-3">
+		<label asp-for="tipoOperacionID" class="form-label"></label>
+		<select asp-for="tipoOperacionID" asp-items="Html.GetEnumSelectList<TipoOperacion>()" class="form-select"></select>
+		<span asp-validation-for="tipoOperacionID" class="text-danger"></span>
+	</div>
+
+	<div class="mb-3">
+		<label asp-for="CategoriaID" class="form-label"></label>
+		<select asp-for="CategoriaID" class="form-select"></select>
+		<span asp-validation-for="CategoriaID" class="text-danger"></span>
+	</div>
+
+	<div class="mb-3">
+		<label asp-for="Monto" class="form-label"></label>
+		<input asp-for="Monto" class="form-control" />
+		<span asp-validation-for="Monto" class="text-danger"></span>
+	</div>
+
+	<div class="mb-3">
+		<label asp-for="Nota" class="form-label"></label>
+		<textarea asp-for="Nota" class="form-control"></textarea>
+		<span asp-validation-for="Nota" class="text-danger"></span>
+	</div>
+
+	<button class="btn btn-primary">Actualizar</button>
+	<button class="btn btn-danger" asp-action="Borrar">Borrar</button>
+	<a class="btn btn-secondary" href="@linkCancelar">Cancelar</a>
+</form>
+
+
+
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+	<script src="~/js/FormularioTransacciones.js" asp-append-version="true"></script>
+
+	@* Script para obtener las categorias al cambiar el tipo de operacion *@
+	<script>
+		const urlObtenerCategorias = '@Url.Action("ObtenerCategorias")';
+
+		$(function(){
+			inicializarFormularioTransacciones(urlObtenerCategorias);
+		})
+	</script>
+}

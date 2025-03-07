@@ -1,0 +1,35 @@
+﻿@model TipoCuentaModel
+@{
+	ViewData["Title"] = "Editar tipo cuenta";
+}
+
+<h1>Editar tipo cuenta: @Model.Nombre</h1>
+
+
+<h1>Crear Tipo de Cuenta</h1>
+<h5>
+	El tipo de cuenta se refiere a cómo podemos agrupar cuentas.
+	Ejemplos: Préstamos, tarjetas de credito, etc.
+</h5>
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<form asp-controller="TiposCuentas" asp-action="Editar">
+	<input type="hidden" asp-for="id" />
+	<div class="mb-3">
+		<label asp-for="Nombre" class="form-label"></label>
+		<input type="text" asp-for="Nombre" class="form-control" />
+		<span asp-validation-for="Nombre" class="text-danger"></span> @* Para tener validaciones en el Front, nos apoyamos de la libreria de JQuery *@
+	</div>
+
+	<button type="submit" class="btn btn-primary">Enviar</button>
+	<a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
+
+
+@* Importamos JQuery en una nueva seccion *@
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}
+
+
